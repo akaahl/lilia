@@ -12,3 +12,5 @@ export const NEXT_PUBLIC_CLERK_SIGN_UP_URL =
   process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL;
 
 export const DATABASE_URL = process.env.DATABASE_URL!;
+
+export const NEXT_PUBLIC_APP_URL = process.env.NEXT_PUBLIC_APP_URL;
