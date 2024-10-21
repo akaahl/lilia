@@ -69,7 +69,7 @@ export default function Navigation() {
                 key={route.href}
                 variant={pathname === route.href ? "secondary" : "ghost"}
                 onClick={() => onClick(route.href)}
-                className="font-semibold"
+                className="w-full justify-start font-semibold"
               >
                 {route.label}
               </Button>
