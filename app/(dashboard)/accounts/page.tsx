@@ -8,13 +8,17 @@ import { columns } from "./Columns";
 import { DataTable } from "@/components/DataTable";
 import { useGetAccounts } from "@/features/accounts/api/useGetAccounts";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useBulkDeleteAccounts } from "@/features/accounts/api/useBulkDelete";
 
 export default function AccountsPage() {
   const { onOpen } = useNewAccount();
-  const { data, isLoading } = useGetAccounts();
-  const accounts = data || [];
+  const accountsQuery = useGetAccounts();
+  const deleteAccounts = useBulkDeleteAccounts();
+  const accounts = accountsQuery.data || [];
 
-  if (isLoading) {
+  const disabled = deleteAccounts.isPending || accountsQuery.isLoading;
+
+  if (accountsQuery.isLoading) {
     return (
       <div className="max-w-screen-2xl mx-auto pb-10 -mt-24">
         <Card className="border-none drop-shadow-sm">
@@ -49,7 +53,11 @@ export default function AccountsPage() {
             columns={columns}
             data={accounts}
             filterKey="name"
-            onDelete={() => {}}
+            onDelete={(row) => {
+              const ids = row.map((r) => r.original.id);
+              deleteAccounts.mutate({ ids });
+            }}
+            disabled={disabled}
           />
         </CardContent>
       </Card>
