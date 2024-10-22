@@ -20,7 +20,11 @@ const app = new Hono()
         name: accounts.name,
       })
       .from(accounts)
-      .where(eq(accounts.id, auth.userId));
+      .where(eq(accounts.userId, auth.userId));
+
+    if (data.length === 0) {
+      return c.json({ error: "No data found" }, 404);
+    }
 
     return c.json({ data });
   })
