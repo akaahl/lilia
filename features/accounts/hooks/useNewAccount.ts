@@ -3,7 +3,7 @@ import { create } from "zustand";
 type NewAccountState = {
   isOpen?: boolean;
   onOpen?: () => void;
-  onClose?: () => void;
+  onClose: () => void;
 };
 
 export const useNewAccount = create<NewAccountState>((set) => ({

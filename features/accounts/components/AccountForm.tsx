@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { TrashIcon } from "lucide-react";
 
 const formSchema = insertAccountSchema.pick({
   name: true,
@@ -38,8 +40,8 @@ export default function AccountForm({
     defaultValues,
   });
 
-  const handleSubmit = (formValues: FormValues) => {
-    console.log({ formValues });
+  const handleSubmit = (values: FormValues) => {
+    onSubmit(values);
   };
 
   const handleDelete = () => {
@@ -68,6 +70,23 @@ export default function AccountForm({
             </FormItem>
           )}
         />
+        <Button
+          className="w-full"
+          disabled={disabled}
+        >
+          {id ? "Save" : "Create account"}
+        </Button>
+        {!!id && (
+          <Button
+            disabled={disabled}
+            onClick={handleDelete}
+            className="w-full"
+            variant="outline"
+          >
+            <TrashIcon className="size-4 mr-2" />
+            Delete
+          </Button>
+        )}
       </form>
     </Form>
   );

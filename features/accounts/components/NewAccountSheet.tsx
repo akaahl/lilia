@@ -7,9 +7,28 @@ import {
 } from "@/components/ui/sheet";
 import { useNewAccount } from "../hooks/useNewAccount";
 import AccountForm from "./AccountForm";
+import { insertAccountSchema } from "@/db/schema";
+import { z } from "zod";
+import { useCreateAccount } from "../api/useCreateAccount";
+
+const formSchema = insertAccountSchema.pick({
+  name: true,
+});
+
+type FormValues = z.input<typeof formSchema>;
 
 export default function NewAccountSheet() {
   const { isOpen, onClose } = useNewAccount();
+
+  const { mutate, isPending } = useCreateAccount();
+
+  const handleSubmit = (values: FormValues) => {
+    mutate(values, {
+      onSuccess: () => {
+        onClose();
+      },
+    });
+  };
 
   return (
     <Sheet
@@ -24,8 +43,11 @@ export default function NewAccountSheet() {
           </SheetDescription>
         </SheetHeader>
         <AccountForm
-          onSubmit={() => {}}
-          disabled={false}
+          onSubmit={handleSubmit}
+          disabled={isPending}
+          defaultValues={{
+            name: "",
+          }}
         />
       </SheetContent>
     </Sheet>
