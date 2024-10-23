@@ -22,7 +22,7 @@ export const useEditCategory = (id?: string) => {
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Account updated");
+      toast.success("Category updated");
       queryClient.invalidateQueries({ queryKey: ["category", { id }] });
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },

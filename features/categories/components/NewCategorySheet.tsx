@@ -5,13 +5,13 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { insertAccountSchema } from "@/db/schema";
 import { z } from "zod";
 import { useCreateCategory } from "../api/useCreateCategory";
 import CategoryForm from "./CategoryForm";
 import { useNewCategory } from "../hooks/useNewCategory";
+import { insertCategorySchema } from "@/db/schema";
 
-const formSchema = insertAccountSchema.pick({
+const formSchema = insertCategorySchema.pick({
   name: true,
 });
 
