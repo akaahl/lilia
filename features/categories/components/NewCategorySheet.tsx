@@ -5,11 +5,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useNewAccount } from "../hooks/useNewAccount";
-import AccountForm from "./AccountForm";
 import { insertAccountSchema } from "@/db/schema";
 import { z } from "zod";
-import { useCreateAccount } from "../api/useCreateAccount";
+import { useCreateCategory } from "../api/useCreateCategory";
+import CategoryForm from "./CategoryForm";
+import { useNewCategory } from "../hooks/useNewCategory";
 
 const formSchema = insertAccountSchema.pick({
   name: true,
@@ -17,10 +17,10 @@ const formSchema = insertAccountSchema.pick({
 
 type FormValues = z.input<typeof formSchema>;
 
-export default function NewAccountSheet() {
-  const { isOpen, onClose } = useNewAccount();
+export default function NewCategorySheet() {
+  const { isOpen, onClose } = useNewCategory();
 
-  const { mutate, isPending } = useCreateAccount();
+  const { mutate, isPending } = useCreateCategory();
 
   const handleSubmit = (values: FormValues) => {
     mutate(values, {
@@ -37,12 +37,12 @@ export default function NewAccountSheet() {
     >
       <SheetContent className="space-y-4">
         <SheetHeader>
-          <SheetTitle>New Account</SheetTitle>
+          <SheetTitle>New Category</SheetTitle>
           <SheetDescription>
-            Create a new account to track your transactions.
+            Create a new category to track your transactions.
           </SheetDescription>
         </SheetHeader>
-        <AccountForm
+        <CategoryForm
           onSubmit={handleSubmit}
           disabled={isPending}
           defaultValues={{

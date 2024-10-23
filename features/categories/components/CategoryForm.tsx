@@ -1,4 +1,3 @@
-import { insertAccountSchema } from "@/db/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -12,8 +11,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
+import { insertCategorySchema } from "@/db/schema";
 
-const formSchema = insertAccountSchema.pick({
+const formSchema = insertCategorySchema.pick({
   name: true,
 });
 
@@ -27,7 +27,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export default function AccountForm({
+export default function CategoryForm({
   id,
   defaultValues,
   onDelete,
@@ -73,7 +73,7 @@ export default function AccountForm({
           className="w-full"
           disabled={disabled}
         >
-          {id ? "Save" : "Create account"}
+          {id ? "Save" : "Create category"}
         </Button>
         {!!id && (
           <Button

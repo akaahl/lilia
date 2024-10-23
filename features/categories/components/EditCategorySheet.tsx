@@ -5,35 +5,35 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import AccountForm from "./AccountForm";
-import { insertAccountSchema } from "@/db/schema";
+import { insertCategorySchema } from "@/db/schema";
 import { z } from "zod";
-import { useOpenAccount } from "../hooks/useOpenAccount";
-import { useGetAccount } from "../api/useGetAccount";
+import { useGetCategory } from "../api/useGetCategory";
 import { Loader2 } from "lucide-react";
-import { useEditAccount } from "../api/useEditAccount";
-import { useDeleteAccount } from "../api/useDeleteAccount";
+import { useEditCategory } from "../api/useEditCategory";
+import { useDeleteCategory } from "../api/useDeleteCategory";
 import { useConfirm } from "@/hooks/useConfirm";
+import CategoryForm from "./CategoryForm";
+import { useOpenCategory } from "../hooks/useOpenCategory";
 
-const formSchema = insertAccountSchema.pick({
+const formSchema = insertCategorySchema.pick({
   name: true,
 });
 
 type FormValues = z.input<typeof formSchema>;
 
-export default function EditAccountSheet() {
-  const { isOpen, onClose, id } = useOpenAccount();
+export default function EditCategorySheet() {
+  const { isOpen, onClose, id } = useOpenCategory();
   const [ConfirmationDialog, confirm] = useConfirm(
     "Are you sure?",
     "You are about to delete this transaction.",
   );
-  const accountQuery = useGetAccount(id);
-  const editMutation = useEditAccount(id);
-  const deleteMutation = useDeleteAccount(id);
+  const categoryQuery = useGetCategory(id);
+  const editMutation = useEditCategory(id);
+  const deleteMutation = useDeleteCategory(id);
 
   const isPending = editMutation.isPending || deleteMutation.isPending;
 
-  const isLoading = accountQuery.isLoading;
+  const isLoading = categoryQuery.isLoading;
 
   const handleSubmit = (values: FormValues) => {
     editMutation.mutate(values, {
@@ -55,9 +55,9 @@ export default function EditAccountSheet() {
     }
   };
 
-  const defaultValues = accountQuery.data
+  const defaultValues = categoryQuery.data
     ? {
-        name: accountQuery.data.name,
+        name: categoryQuery.data.name,
       }
     : {
         name: "",
@@ -72,15 +72,15 @@ export default function EditAccountSheet() {
       >
         <SheetContent className="space-y-4">
           <SheetHeader>
-            <SheetTitle>Edit account</SheetTitle>
-            <SheetDescription>Edit your existing account</SheetDescription>
+            <SheetTitle>Edit category</SheetTitle>
+            <SheetDescription>Edit your existing category</SheetDescription>
           </SheetHeader>
           {isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <Loader2 className="size-4 text-muted-foreground animate-spin" />
             </div>
           ) : (
-            <AccountForm
+            <CategoryForm
               id={id}
               onSubmit={handleSubmit}
               disabled={isPending}

@@ -2,23 +2,23 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNewAccount } from "@/features/accounts/hooks/useNewAccount";
 import { Loader2, Plus } from "lucide-react";
 import { columns } from "./Columns";
 import { DataTable } from "@/components/DataTable";
-import { useGetAccounts } from "@/features/accounts/api/useGetAccounts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBulkDeleteAccounts } from "@/features/accounts/api/useBulkDelete";
+import { useGetCategories } from "@/features/categories/api/useGetCategories";
+import { useBulkDeleteCategories } from "@/features/categories/api/useBulkDelete";
+import { useNewCategory } from "@/features/categories/hooks/useNewCategory";
 
 export default function CategoriesPage() {
-  const { onOpen } = useNewAccount();
-  const accountsQuery = useGetAccounts();
-  const deleteAccounts = useBulkDeleteAccounts();
-  const accounts = accountsQuery.data || [];
+  const { onOpen } = useNewCategory();
+  const categoriesQuery = useGetCategories();
+  const deleteCategories = useBulkDeleteCategories();
+  const categories = categoriesQuery.data || [];
 
-  const disabled = deleteAccounts.isPending || accountsQuery.isLoading;
+  const disabled = deleteCategories.isPending || categoriesQuery.isLoading;
 
-  if (accountsQuery.isLoading) {
+  if (categoriesQuery.isLoading) {
     return (
       <div className="max-w-screen-2xl mx-auto pb-10 -mt-24">
         <Card className="border-none drop-shadow-sm">
@@ -53,11 +53,11 @@ export default function CategoriesPage() {
         <CardContent>
           <DataTable
             columns={columns}
-            data={accounts}
+            data={categories}
             filterKey="name"
             onDelete={(row) => {
               const ids = row.map((r) => r.original.id);
-              deleteAccounts.mutate({ ids });
+              deleteCategories.mutate({ ids });
             }}
             disabled={disabled}
           />
