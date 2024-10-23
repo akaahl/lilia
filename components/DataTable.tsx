@@ -42,10 +42,6 @@ export function DataTable<TData, TValue>({
   onDelete,
   disabled,
 }: DataTableProps<TData, TValue>) {
-  const [ConfirmationDialog, confirm] = useConfirm(
-    "Are you sure?",
-    "You are about to bulk delete.",
-  );
   const [rowSelection, setRowSelection] = React.useState({});
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -68,6 +64,16 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+
+  const confirmationMessage =
+    table.getFilteredSelectedRowModel().rows.length > 1
+      ? "You are about to bulk delete accounts"
+      : "You are about to delete an account";
+
+  const [ConfirmationDialog, confirm] = useConfirm(
+    "Are you sure?",
+    confirmationMessage,
+  );
 
   return (
     <div>
