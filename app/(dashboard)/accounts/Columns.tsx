@@ -6,7 +6,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { InferResponseType } from "hono";
 import { client } from "@/lib/hono";
-import Actions from "./Accounts";
+import Actions from "./Actions";
 
 export type ResponseType = InferResponseType<
   typeof client.api.accounts.$get,

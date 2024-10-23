@@ -3,7 +3,7 @@ import { create } from "zustand";
 type OpenAccountState = {
   id?: string;
   isOpen?: boolean;
-  onOpen?: (id: string) => void;
+  onOpen: (id: string) => void;
   onClose: () => void;
 };
 
