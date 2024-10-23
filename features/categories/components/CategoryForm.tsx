@@ -62,7 +62,7 @@ export default function CategoryForm({
               <FormControl>
                 <Input
                   disabled={disabled}
-                  placeholder="e.g Cash, Bank, Credit Card"
+                  placeholder="e.g Food, Travel, Hobby"
                   {...field}
                 />
               </FormControl>
@@ -84,7 +84,7 @@ export default function CategoryForm({
             type="button"
           >
             <TrashIcon className="size-4 mr-2" />
-            Delete
+            Delete category
           </Button>
         )}
       </form>

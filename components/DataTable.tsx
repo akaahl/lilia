@@ -65,14 +65,9 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const confirmationMessage =
-    table.getFilteredSelectedRowModel().rows.length > 1
-      ? "You are about to bulk delete accounts"
-      : "You are about to delete an account";
-
   const [ConfirmationDialog, confirm] = useConfirm(
     "Are you sure?",
-    confirmationMessage,
+    "You are about to bulk delete",
   );
 
   return (

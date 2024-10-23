@@ -25,7 +25,7 @@ export default function EditCategorySheet() {
   const { isOpen, onClose, id } = useOpenCategory();
   const [ConfirmationDialog, confirm] = useConfirm(
     "Are you sure?",
-    "You are about to delete this transaction.",
+    "You are about to delete this category.",
   );
   const categoryQuery = useGetCategory(id);
   const editMutation = useEditCategory(id);
