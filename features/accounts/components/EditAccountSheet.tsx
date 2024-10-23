@@ -12,6 +12,7 @@ import { useOpenAccount } from "../hooks/useOpenAccount";
 import { useGetAccount } from "../api/useGetAccount";
 import { Loader2 } from "lucide-react";
 import { useEditAccount } from "../api/useEditAccount";
+import { useDeleteAccount } from "../api/useDeleteAccount";
 
 const formSchema = insertAccountSchema.pick({
   name: true,
@@ -23,8 +24,9 @@ export default function EditAccountSheet() {
   const { isOpen, onClose, id } = useOpenAccount();
   const accountQuery = useGetAccount(id);
   const editMutation = useEditAccount(id);
+  const deleteMutation = useDeleteAccount(id);
 
-  const isPending = editMutation.isPending;
+  const isPending = editMutation.isPending || deleteMutation.isPending;
 
   const isLoading = accountQuery.isLoading;
 
@@ -64,6 +66,7 @@ export default function EditAccountSheet() {
             onSubmit={handleSubmit}
             disabled={isPending}
             defaultValues={defaultValues}
+            onDelete={() => deleteMutation.mutate()}
           />
         )}
       </SheetContent>
