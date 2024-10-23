@@ -10,7 +10,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
 
@@ -82,6 +81,7 @@ export default function AccountForm({
             onClick={handleDelete}
             className="w-full"
             variant="outline"
+            type="button"
           >
             <TrashIcon className="size-4 mr-2" />
             Delete
