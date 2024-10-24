@@ -38,9 +38,7 @@ export default function NewTransactionSheet() {
       <SheetContent className="space-y-4">
         <SheetHeader>
           <SheetTitle>New Transaction</SheetTitle>
-          <SheetDescription>
-            Create a new transaction to track your transactions.
-          </SheetDescription>
+          <SheetDescription>Add a new transaction.</SheetDescription>
         </SheetHeader>
         <p>Todo: Transaction Form</p>
       </SheetContent>
