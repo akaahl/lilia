@@ -10,7 +10,7 @@ import { zValidator } from "@hono/zod-validator";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
 import { subDays, parse } from "date-fns";
-import { createId } from "@paralleldrive/cuid2";
+import cuid2, { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
 const app = new Hono()
@@ -169,6 +169,31 @@ const app = new Hono()
         .returning({
           id: transactions.id,
         });
+
+      return c.json({ data });
+    },
+  )
+  .post(
+    "/bulk-create",
+    clerkMiddleware(),
+    zValidator("json", z.array(insertTransactionsSchema.omit({ id: true }))),
+    async (c) => {
+      const auth = getAuth(c);
+      const values = c.req.valid("json");
+
+      if (!auth?.userId) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      const data = await db
+        .insert(transactions)
+        .values(
+          values.map((value) => ({
+            id: createId(),
+            ...value,
+          })),
+        )
+        .returning();
 
       return c.json({ data });
     },
