@@ -27,7 +27,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export default function AccountForm({
+export default function TransactionForm({
   id,
   defaultValues,
   onDelete,
