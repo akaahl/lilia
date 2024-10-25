@@ -1,4 +1,6 @@
 import { useOpenCategory } from "@/features/categories/hooks/useOpenCategory";
+import { cn } from "@/lib/utils";
+import { TriangleAlert } from "lucide-react";
 
 type Props = {
   id: string;
@@ -17,8 +19,9 @@ export default function CategoryColumn({ category, categoryId }: Props) {
   return (
     <div
       onClick={handleClick}
-      className="flex items-center cursor-pointer hover:underline"
+      className={cn("flex items-center cursor-pointer hover:underline", !category && 'text-rose-500')}
     >
+      {!category && <TriangleAlert className="mr-2 size-4 shrink-0" />}
       {category || "Uncategorized"}
     </div>
   );
