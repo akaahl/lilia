@@ -1,4 +1,4 @@
-import { insertAccountSchema, insertTransactionsSchema } from "@/db/schema";
+import { insertTransactionsSchema } from "@/db/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,11 +16,12 @@ import Select from "@/components/Select";
 import Datepicker from "@/components/Datepicker";
 import { Textarea } from "@/components/ui/textarea";
 import AmountInput from "@/components/AmountInput";
+import { convertAmountToMiliunits } from "@/lib/utils";
 
 const formSchema = z.object({
   date: z.coerce.date(),
   accountId: z.string(),
-  categoryId: z.string().nullable().optional(),
+  categoryId: z.string(),
   payee: z.string(),
   amount: z.string(),
   notes: z.string().nullable().optional(),
@@ -62,7 +63,14 @@ export default function TransactionForm({
   });
 
   const handleSubmit = (values: FormValues) => {
+    const amount = parseFloat(values.amount);
+
+    const amountInMiliunits = convertAmountToMiliunits(amount);
     console.log({ values });
+    onSubmit({
+      ...values,
+      amount: amountInMiliunits,
+    });
   };
 
   const handleDelete = () => {

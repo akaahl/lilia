@@ -51,16 +51,16 @@ export default function TransactionsPage() {
           </Button>
         </CardHeader>
         <CardContent>
-          {/* <DataTable
+          <DataTable
             columns={columns}
             data={transactions}
-            filterKey="name"
+            filterKey="transactions"
             onDelete={(row) => {
               const ids = row.map((r) => r.original.id);
               deleteTransactions.mutate({ ids });
             }}
             disabled={disabled}
-          /> */}
+          />
         </CardContent>
       </Card>
     </div>
