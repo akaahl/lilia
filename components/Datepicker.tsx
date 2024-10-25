@@ -13,7 +13,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export default function Datepicket({ value, onChange, disabled }: Props) {
+export default function Datepicker({ value, onChange, disabled }: Props) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -25,7 +25,7 @@ export default function Datepicket({ value, onChange, disabled }: Props) {
             !value && "text-muted-foreground",
           )}
         >
-          <CalendarIcon className="size-4 mr-2" />
+          <CalendarIcon className="size-4" />
           {value ? format(value, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
