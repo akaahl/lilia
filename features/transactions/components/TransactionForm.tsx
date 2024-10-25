@@ -190,7 +190,7 @@ export default function TransactionForm({
           className="w-full"
           disabled={disabled}
         >
-          {id ? "Save" : "Create account"}
+          {id ? "Save" : "Create transaction"}
         </Button>
         {!!id && (
           <Button
