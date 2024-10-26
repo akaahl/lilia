@@ -11,6 +11,7 @@ import { useGetTransactions } from "@/features/transactions/api/useGetTransactio
 import { useBulkDeleteTransactions } from "@/features/transactions/api/useBulkDelete";
 import { useState } from "react";
 import UploadButton from "./UploadButton";
+import ImportCard from "./ImportCard";
 
 enum VARIANTS {
   list = "LIST",
@@ -25,6 +26,7 @@ const INITIAL_IMPORT_RESULTS = {
 
 export default function TransactionsPage() {
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.list);
+  const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
 
   const { onOpen } = useNewTransaction();
   const transactionsQuery = useGetTransactions();
@@ -32,6 +34,17 @@ export default function TransactionsPage() {
   const transactions = transactionsQuery.data || [];
 
   const disabled = deleteTransactions.isPending || transactionsQuery.isLoading;
+
+  const handleUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
+    console.log({ results });
+    setImportResults(results);
+    setVariant(VARIANTS.import);
+  };
+
+  const handleCancel = () => {
+    setImportResults(INITIAL_IMPORT_RESULTS);
+    setVariant(VARIANTS.import);
+  };
 
   if (transactionsQuery.isLoading) {
     return (
@@ -53,7 +66,11 @@ export default function TransactionsPage() {
   if (variant === VARIANTS.import) {
     return (
       <>
-        <div>This is an import variant</div>
+        <ImportCard
+          data={importResults.data}
+          onCancel={handleCancel}
+          onSubmit={() => {}}
+        />
       </>
     );
   }
@@ -73,7 +90,7 @@ export default function TransactionsPage() {
               <Plus className="size-4 mr-2" />
               Add new
             </Button>
-            <UploadButton onUpload={() => {}} />
+            <UploadButton onUpload={handleUpload} />
           </div>
         </CardHeader>
         <CardContent>
