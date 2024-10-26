@@ -9,8 +9,23 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useNewTransaction } from "@/features/transactions/hooks/useNewTransaction";
 import { useGetTransactions } from "@/features/transactions/api/useGetTransactions";
 import { useBulkDeleteTransactions } from "@/features/transactions/api/useBulkDelete";
+import { useState } from "react";
+import UploadButton from "./UploadButton";
+
+enum VARIANTS {
+  list = "LIST",
+  import = "IMPORT",
+}
+
+const INITIAL_IMPORT_RESULTS = {
+  data: [],
+  errors: [],
+  meta: {},
+};
 
 export default function TransactionsPage() {
+  const [variant, setVariant] = useState<VARIANTS>(VARIANTS.list);
+
   const { onOpen } = useNewTransaction();
   const transactionsQuery = useGetTransactions();
   const deleteTransactions = useBulkDeleteTransactions();
@@ -35,6 +50,14 @@ export default function TransactionsPage() {
     );
   }
 
+  if (variant === VARIANTS.import) {
+    return (
+      <>
+        <div>This is an import variant</div>
+      </>
+    );
+  }
+
   return (
     <div className="max-w-screen-2xl mx-auto pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
@@ -42,13 +65,16 @@ export default function TransactionsPage() {
           <CardTitle className="text-xl line-clamp-1">
             Transactions history
           </CardTitle>
-          <Button
-            size="sm"
-            onClick={onOpen}
-          >
-            <Plus className="size-4 mr-2" />
-            Add new
-          </Button>
+          <div className="flex items-center gap-x-2">
+            <Button
+              size="sm"
+              onClick={onOpen}
+            >
+              <Plus className="size-4 mr-2" />
+              Add new
+            </Button>
+            <UploadButton onUpload={() => {}} />
+          </div>
         </CardHeader>
         <CardContent>
           <DataTable
