@@ -7,6 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { SelectedColumnsState } from "./ImportCard";
+import TableHeadSelect from "./TableHeadSelect";
 
 type Props = {
   headers: string[];
@@ -27,7 +28,13 @@ export default function ImportTable({
         <TableHeader className="bg-muted">
           <TableRow>
             {headers.map((_item, index) => (
-              <TableHead key={index}>{index}</TableHead>
+              <TableHead key={index}>
+                <TableHeadSelect
+                  columnIndex={index}
+                  selectedColumns={selectedColumns}
+                  onChange={onTableSelectChange}
+                />
+              </TableHead>
             ))}
           </TableRow>
         </TableHeader>
