@@ -1,3 +1,11 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { SelectedColumnsState } from "./ImportCard";
 
 type Props = {
@@ -14,8 +22,25 @@ export default function ImportTable({
   onTableSelectChange,
 }: Props) {
   return (
-    <div>
-      <div></div>
+    <div className="rounded-md border overflow-hidden">
+      <Table>
+        <TableHeader className="bg-muted">
+          <TableRow>
+            {headers.map((_item, index) => (
+              <TableHead key={index}>{index}</TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {body.map((row: string[], index) => (
+            <TableRow key={index}>
+              {row.map((cell, index) => (
+                <TableCell key={index}>{cell}</TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
