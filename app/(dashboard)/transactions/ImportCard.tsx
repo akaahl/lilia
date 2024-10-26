@@ -57,16 +57,18 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
           <CardTitle className="text-xl line-clamp-1">
             Import transactions
           </CardTitle>
-          <div className="flex items-center gap-x-2">
+          <div className="flex flex-col lg:flex-row gap-y-2 items-center gap-x-2">
             <Button
               size="sm"
               onClick={onCancel}
+              className="w-full lg:w-auto"
             >
               Cancel
             </Button>
             <Button
               size="sm"
               disabled={progress < requiredOptions.length}
+              className="w-full lg:w-auto"
               onClick={() => {}}
             >
               Continue ({progress} / {requiredOptions.length})
