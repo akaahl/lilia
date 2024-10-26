@@ -42,6 +42,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     enableHiding: false,
   },
   {
+    id: "date",
     accessorKey: "date",
     header: ({ column }) => {
       return (
@@ -61,6 +62,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
   },
   {
+    id: "category",
     accessorKey: "category",
     header: ({ column }) => {
       return (
@@ -84,6 +86,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
   },
   {
+    id: "payee",
     accessorKey: "payee",
     header: ({ column }) => {
       return (
@@ -98,6 +101,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
   },
   {
+    id: "amount",
     accessorKey: "amount",
     header: ({ column }) => {
       return (
@@ -124,6 +128,7 @@ export const columns: ColumnDef<ResponseType>[] = [
     },
   },
   {
+    id: "account",
     accessorKey: "account",
     header: ({ column }) => {
       return (
