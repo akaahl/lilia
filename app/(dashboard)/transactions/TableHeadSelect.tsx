@@ -20,12 +20,14 @@ export default function TableHeadSelect({
   selectedColumns,
   onChange,
 }: Props) {
-  const currentSelection = selectedColumns[`columns_${columnIndex}`];
+  const currentSelection = selectedColumns[`column_${columnIndex}`];
 
   return (
     <Select
       value={currentSelection || ""}
-      onValueChange={(value) => onChange(columnIndex, value)}
+      onValueChange={(value) =>
+        onChange(columnIndex, value === "skip" ? null : value)
+      }
     >
       <SelectTrigger
         className={cn(
