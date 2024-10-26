@@ -48,6 +48,8 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
     });
   };
 
+  const progress = Object.values(selectedColumns).filter(Boolean).length;
+
   return (
     <div className="max-w-screen-2xl mx-auto pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
@@ -61,6 +63,13 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
               onClick={onCancel}
             >
               Cancel
+            </Button>
+            <Button
+              size="sm"
+              disabled={progress < requiredOptions.length}
+              onClick={() => {}}
+            >
+              Continue ({progress} / {requiredOptions.length})
             </Button>
           </div>
         </CardHeader>

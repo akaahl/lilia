@@ -13,7 +13,12 @@ type Props = {
   onChange: (columnIndex: number, value: string | null) => void;
 };
 
-const options = ["payee", "amount", "notes", "date"];
+const options = [
+  "payee",
+  "amount",
+  // "notes",
+  "date",
+];
 
 export default function TableHeadSelect({
   columnIndex,
