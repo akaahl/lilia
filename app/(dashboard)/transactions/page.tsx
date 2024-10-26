@@ -36,14 +36,14 @@ export default function TransactionsPage() {
   const disabled = deleteTransactions.isPending || transactionsQuery.isLoading;
 
   const handleUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
-    console.log({ results });
     setImportResults(results);
     setVariant(VARIANTS.import);
   };
 
   const handleCancel = () => {
     setImportResults(INITIAL_IMPORT_RESULTS);
-    setVariant(VARIANTS.import);
+    setVariant(VARIANTS.list);
+    console.log("cancel", variant, importResults);
   };
 
   if (transactionsQuery.isLoading) {
