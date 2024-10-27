@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { format, parse } from "date-fns";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import ImportTable from "./ImportTable";
+import { convertAmountToMiliunits } from "@/lib/utils";
 
 const dateFormat = "yyyy-MM-dd HH:mm:ss";
 const outputFormat = "yyyy-MM-dd";
@@ -50,6 +52,51 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
 
   const progress = Object.values(selectedColumns).filter(Boolean).length;
 
+  const handleContinue = () => {
+    const getColumnIndex = (column: string) => {
+      return column.split("_")[1];
+    };
+
+    const mappedData = {
+      headers: headers.map((_header, index) => {
+        const columnIndex = getColumnIndex(`column_${index}`);
+        return selectedColumns[`column_${columnIndex}`] || null;
+      }),
+      body: body
+        .map((row) => {
+          const transformedRow = row.map((cell, index) => {
+            const columnIndex = getColumnIndex(`column_${index}`);
+            return selectedColumns[`column_${columnIndex}`] ? cell : null;
+          });
+
+          return transformedRow.every((item) => item === null)
+            ? []
+            : transformedRow;
+        })
+        .filter((row) => row.length > 0),
+    };
+
+    const arrayOfData = mappedData.body.map((row) => {
+      return row.reduce((acc: any, cell, index) => {
+        const header = mappedData.headers[index];
+
+        if (header !== null) {
+          acc[header] = cell;
+        }
+
+        return acc;
+      }, {});
+    });
+
+    const formattedData = arrayOfData.map((item, index) => ({
+      ...item,
+      amount: convertAmountToMiliunits(parseFloat(item.amount)),
+      date: format(parse(item.date, dateFormat, new Date()), outputFormat),
+    }));
+
+    onSubmit(formattedData);
+  };
+
   return (
     <div className="max-w-screen-2xl mx-auto pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
@@ -69,7 +116,7 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
               size="sm"
               disabled={progress < requiredOptions.length}
               className="w-full lg:w-auto"
-              onClick={() => {}}
+              onClick={handleContinue}
             >
               Continue ({progress} / {requiredOptions.length})
             </Button>
