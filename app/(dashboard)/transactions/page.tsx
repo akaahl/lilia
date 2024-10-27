@@ -14,6 +14,8 @@ import UploadButton from "./UploadButton";
 import ImportCard from "./ImportCard";
 import { transactions as transactionSchema } from "@/db/schema";
 import { useSelectAccount } from "@/hooks/useSelectAccount";
+import { toast } from "sonner";
+import { useBulkCreateTransactions } from "@/features/transactions/api/useBulkCreate";
 
 enum VARIANTS {
   list = "LIST",
@@ -33,6 +35,7 @@ export default function TransactionsPage() {
 
   const { onOpen } = useNewTransaction();
   const transactionsQuery = useGetTransactions();
+  const createTransactions = useBulkCreateTransactions();
   const deleteTransactions = useBulkDeleteTransactions();
   const transactions = transactionsQuery.data || [];
 
@@ -46,12 +49,31 @@ export default function TransactionsPage() {
   const handleCancel = () => {
     setImportResults(INITIAL_IMPORT_RESULTS);
     setVariant(VARIANTS.list);
-    console.log("cancel", variant, importResults);
   };
 
   const onSubmitImport = async (
     values: (typeof transactionSchema.$inferInsert)[],
-  ) => {};
+  ) => {
+    const accountId = await confirm();
+
+    if (!accountId) {
+      return toast.error("Please select an account to continue");
+    }
+
+    const data = values.map((value) => ({
+      ...value,
+      accountId: accountId as string,
+    }));
+
+    createTransactions.mutate(data, {
+      onSuccess: (result) => {
+        handleCancel();
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    });
+  };
 
   if (transactionsQuery.isLoading) {
     return (
@@ -77,7 +99,7 @@ export default function TransactionsPage() {
         <ImportCard
           data={importResults.data}
           onCancel={handleCancel}
-          onSubmit={() => {}}
+          onSubmit={onSubmitImport}
         />
       </>
     );

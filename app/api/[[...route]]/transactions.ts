@@ -10,7 +10,7 @@ import { zValidator } from "@hono/zod-validator";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
 import { subDays, parse } from "date-fns";
-import cuid2, { createId } from "@paralleldrive/cuid2";
+import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 
 const app = new Hono()
@@ -34,7 +34,7 @@ const app = new Hono()
       }
 
       const defaultTo = new Date();
-      const defaultFrom = subDays(defaultTo, 30);
+      const defaultFrom = subDays(defaultTo, 365);
 
       const startDate = from
         ? parse(from, "yyyy-MM-DD", new Date())
