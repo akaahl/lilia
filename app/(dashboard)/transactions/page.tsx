@@ -13,6 +13,7 @@ import { useState } from "react";
 import UploadButton from "./UploadButton";
 import ImportCard from "./ImportCard";
 import { transactions as transactionSchema } from "@/db/schema";
+import { useSelectAccount } from "@/hooks/useSelectAccount";
 
 enum VARIANTS {
   list = "LIST",
@@ -26,6 +27,7 @@ const INITIAL_IMPORT_RESULTS = {
 };
 
 export default function TransactionsPage() {
+  const [AccountDialog, confirm] = useSelectAccount();
   const [variant, setVariant] = useState<VARIANTS>(VARIANTS.list);
   const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
 
@@ -71,6 +73,7 @@ export default function TransactionsPage() {
   if (variant === VARIANTS.import) {
     return (
       <>
+        <AccountDialog />
         <ImportCard
           data={importResults.data}
           onCancel={handleCancel}
