@@ -12,6 +12,7 @@ import { useBulkDeleteTransactions } from "@/features/transactions/api/useBulkDe
 import { useState } from "react";
 import UploadButton from "./UploadButton";
 import ImportCard from "./ImportCard";
+import { transactions as transactionSchema } from "@/db/schema";
 
 enum VARIANTS {
   list = "LIST",
@@ -45,6 +46,10 @@ export default function TransactionsPage() {
     setVariant(VARIANTS.list);
     console.log("cancel", variant, importResults);
   };
+
+  const onSubmitImport = async (
+    values: (typeof transactionSchema.$inferInsert)[],
+  ) => {};
 
   if (transactionsQuery.isLoading) {
     return (
