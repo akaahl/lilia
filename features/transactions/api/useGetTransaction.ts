@@ -1,4 +1,5 @@
 import { client } from "@/lib/hono";
+import { convertAmountFromMiliunits } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetTransaction = (id?: string) => {
@@ -17,7 +18,10 @@ export const useGetTransaction = (id?: string) => {
       }
 
       if ("data" in result) {
-        return result.data;
+        return {
+          ...result.data,
+          amount: convertAmountFromMiliunits(result.data.amount),
+        };
       }
 
       throw new Error("Unexpected response format");
