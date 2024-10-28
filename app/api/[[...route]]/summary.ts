@@ -1,13 +1,13 @@
 import { db } from "@/db/drizzle";
-import { accounts, transactions } from "@/db/schema";
+import { accounts, categories, transactions } from "@/db/schema";
 import { calculatePercentageChange } from "@/lib/utils";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
 import { subDays, parse, differenceInDays } from "date-fns";
-import { and, eq, gte, lte, sql, sum } from "drizzle-orm";
+import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
 
 import { Hono } from "hono";
-import { z } from "zod";
+import { number, z } from "zod";
 
 const app = new Hono().get(
   "/",
@@ -96,12 +96,49 @@ const app = new Hono().get(
       lastPeriod.remaining,
     );
 
+    const category = await db
+      .select({
+        name: categories.name,
+        value: sql`SUM(ABS(${transactions.amount}))`.mapWith(Number),
+      })
+      .from(transactions)
+      .innerJoin(accounts, eq(transactions.accountId, accounts.id))
+      .innerJoin(categories, eq(transactions.categoryId, categories.id))
+      .where(
+        and(
+          accountId ? eq(transactions.accountId, accountId) : undefined,
+          eq(accounts.userId, auth.userId),
+          lt(transactions.amount, 0),
+          gte(transactions.date, startDate),
+          lte(transactions.date, endDate),
+        ),
+      )
+      .groupBy(categories.name)
+      .orderBy(desc(sql`SUM(ABS(${transactions.amount}))`));
+
+    const topCategories = category.slice(0, 3);
+    const otherCategories = category.slice(3);
+    const otherSum = otherCategories.reduce(
+      (sum, current) => current.value + sum,
+      0,
+    );
+
+    const finalCategories = topCategories;
+
+    if (otherCategories.length > 0) {
+      finalCategories.push({
+        name: "Other",
+        value: otherSum,
+      });
+    }
+
     return c.json({
       currentPeriod,
       lastPeriod,
       incomeChange,
       expensesChange,
       remainingChange,
+      finalCategories,
     });
   },
 );
