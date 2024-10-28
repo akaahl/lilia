@@ -86,7 +86,7 @@ export default function EditTransactionSheet() {
   const defaultValues = transactionQuery.data
     ? {
         accountId: transactionQuery.data.accountId,
-        categoryId: transactionQuery.data.categoryId,
+        categoryId: transactionQuery.data.categoryId ?? "",
         amount: transactionQuery.data.amount.toString(),
         date: transactionQuery.data.date
           ? new Date(transactionQuery.data.date)
@@ -121,6 +121,7 @@ export default function EditTransactionSheet() {
             </div>
           ) : (
             <TransactionForm
+              id={id}
               onSubmit={handleSubmit}
               disabled={isPending}
               categoryOptions={categoryOptions}
