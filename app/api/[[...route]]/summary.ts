@@ -3,7 +3,7 @@ import { accounts, categories, transactions } from "@/db/schema";
 import { calculatePercentageChange, fillMissingDays } from "@/lib/utils";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 import { zValidator } from "@hono/zod-validator";
-import { subDays, parse, differenceInDays } from "date-fns";
+import { subDays, parse, differenceInDays, addDays } from "date-fns";
 import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
 
 import { Hono } from "hono";
@@ -29,13 +29,15 @@ const app = new Hono().get(
     }
 
     const defaultTo = new Date();
-    const defaultFrom = subDays(defaultTo, 365);
+    const defaultFrom = subDays(defaultTo, 30);
 
     const startDate = from
       ? parse(from, "yyyy-MM-DD", new Date())
       : defaultFrom;
 
-    const endDate = to ? parse(to, "yyyy-MM-DD", new Date()) : defaultTo;
+    const endDate = to
+      ? parse(to, "yyyy-MM-DD", new Date())
+      : addDays(defaultTo, 1);
 
     const periodLength = differenceInDays(endDate, startDate) + 1;
     const lastPeriodStart = subDays(startDate, periodLength);
@@ -49,14 +51,16 @@ const app = new Hono().get(
       return await db
         .select({
           income:
-            sql`SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
+            sql`COALESCE(SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END), 0)`.mapWith(
               Number,
             ),
           expenses:
-            sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
+            sql`COALESCE(SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END), 0)`.mapWith(
               Number,
             ),
-          remaining: sum(transactions.amount).mapWith(Number),
+          remaining: sql`COALESCE(SUM(${transactions.amount}), 0)`.mapWith(
+            Number,
+          ),
         })
         .from(transactions)
         .innerJoin(accounts, eq(transactions.accountId, accounts.id))
@@ -69,6 +73,11 @@ const app = new Hono().get(
           ),
         );
     }
+    const test = await fetchFinancialData(
+      auth.userId,
+      lastPeriodStart,
+      lastPeriodEnd,
+    );
 
     const [currentPeriod] = await fetchFinancialData(
       auth.userId,
@@ -77,8 +86,8 @@ const app = new Hono().get(
     );
     const [lastPeriod] = await fetchFinancialData(
       auth.userId,
-      startDate,
-      endDate,
+      lastPeriodStart,
+      lastPeriodEnd,
     );
 
     const incomeChange = calculatePercentageChange(
