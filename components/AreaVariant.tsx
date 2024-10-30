@@ -17,7 +17,7 @@ type Props = {
   }[];
 };
 
-export default function AReaVariant({ data }: Props) {
+export default function AreaVariant({ data }: Props) {
   return (
     <ResponsiveContainer
       width={"100%"}
