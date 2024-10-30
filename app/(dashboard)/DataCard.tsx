@@ -2,11 +2,13 @@ import { IconType } from "react-icons";
 import { VariantProps, cva } from "class-variance-authority";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
+import CountUp from "@/components/ui/countup";
 
 const boxVariant = cva("rounded-md p-3", {
   variants: {
@@ -68,6 +70,27 @@ export default function DataCard({
           <Icon className={cn(iconVariant({ variant }))} />
         </div>
       </CardHeader>
+      <CardContent className="">
+        <h1 className="font-bold text-2xl mb-2 line-clamp-1 break-all">
+          <CountUp
+            preserveValue
+            start={0}
+            end={value}
+            decimals={2}
+            decimalPlaces={2}
+            formattingFn={formatCurrency}
+          />
+        </h1>
+        <p
+          className={cn(
+            "text-muted-foreground text-sm line-clamp-1",
+            percentageChange > 0 && "text-emerald-500",
+            percentageChange < 0 && "text-rose-500",
+          )}
+        >
+          {formatPercentage(percentageChange)} from last period.
+        </p>
+      </CardContent>
     </Card>
   );
 }
