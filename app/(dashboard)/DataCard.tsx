@@ -1,5 +1,12 @@
 import { IconType } from "react-icons";
 import { VariantProps, cva } from "class-variance-authority";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 const boxVariant = cva("rounded-md p-3", {
   variants: {
@@ -41,15 +48,26 @@ interface DataCardProps extends BoxVariants, IconVariants {
 }
 
 export default function DataCard({
-  icon,
+  icon: Icon,
   title,
-  value,
+  value = 0,
   dateRange,
-  percentageChange,
+  percentageChange = 0,
+  variant,
 }: DataCardProps) {
   return (
-    <div>
-      <div>Card</div>
-    </div>
+    <Card className="border-none drop-shadow-sm">
+      <CardHeader className="flex flex-row items-center justify-between gap-x-4">
+        <div className="space-y-2">
+          <CardTitle className="text-2xl line-clamp-1">{title}</CardTitle>
+          <CardDescription className="line-clamp-1">
+            {dateRange}
+          </CardDescription>
+        </div>
+        <div className={cn("shrink-0", boxVariant({ variant }))}>
+          <Icon className={cn(iconVariant({ variant }))} />
+        </div>
+      </CardHeader>
+    </Card>
   );
 }

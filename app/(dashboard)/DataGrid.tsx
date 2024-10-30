@@ -18,7 +18,7 @@ export default function DataGrid() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-2 mb-8">
       <DataCard
         title="Remaining"
-        data={data?.remainingAmount}
+        value={data?.remainingAmount}
         percentageChange={data?.remainingChange}
         icon={FaPiggyBank}
         variant="default"
