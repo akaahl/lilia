@@ -10,6 +10,7 @@ import {
 } from "./ui/select";
 import { useGetAccounts } from "@/features/accounts/api/useGetAccounts";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useGetSummary } from "@/features/summary/api/useGetSummary";
 
 export default function AccountFilter() {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function AccountFilter() {
   const from = params.get("from") || "";
   const to = params.get("to") || "";
 
+  const { isLoading: isLoadingSummary } = useGetSummary();
   const { data: accounts, isLoading: isLoadingAccounts } = useGetAccounts();
 
   const handleValueChange = (newValue: string) => {
@@ -51,7 +53,7 @@ export default function AccountFilter() {
     <Select
       value={accountId}
       onValueChange={handleValueChange}
-      disabled={isLoadingAccounts}
+      disabled={isLoadingAccounts || isLoadingSummary}
     >
       <SelectTrigger
         className="lg:w-auto w-full h-9 rounded-md px-3 font-normal bg-white/10 
