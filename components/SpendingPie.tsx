@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import PieVariant from "./PieVariant";
 
 type Props = {
   data?: {
@@ -70,8 +71,8 @@ export default function SpendingPie({ data = [] }: Props) {
         ) : (
           <>
             {chartType === "pie" && <PieVariant data={data} />}
-            {chartType === "radar" && <RadarVariant data={data} />}
-            {chartType === "radial" && <RadialVariant data={data} />}
+            {/* {chartType === "radar" && <RadarVariant data={data} />}
+            {chartType === "radial" && <RadialVariant data={data} />} */}
           </>
         )}
       </CardContent>
