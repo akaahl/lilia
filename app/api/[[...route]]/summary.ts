@@ -51,16 +51,14 @@ const app = new Hono().get(
       return await db
         .select({
           income:
-            sql`COALESCE(SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END), 0)`.mapWith(
+            sql`SUM(CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
               Number,
             ),
           expenses:
-            sql`COALESCE(SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END), 0)`.mapWith(
+            sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
               Number,
             ),
-          remaining: sql`COALESCE(SUM(${transactions.amount}), 0)`.mapWith(
-            Number,
-          ),
+          remaining: sql`SUM(${transactions.amount})`.mapWith(Number),
         })
         .from(transactions)
         .innerJoin(accounts, eq(transactions.accountId, accounts.id))
@@ -73,11 +71,6 @@ const app = new Hono().get(
           ),
         );
     }
-    const test = await fetchFinancialData(
-      auth.userId,
-      lastPeriodStart,
-      lastPeriodEnd,
-    );
 
     const [currentPeriod] = await fetchFinancialData(
       auth.userId,
