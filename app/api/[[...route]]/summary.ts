@@ -32,11 +32,11 @@ const app = new Hono().get(
     const defaultFrom = subDays(defaultTo, 30);
 
     const startDate = from
-      ? parse(from, "yyyy-MM-DD", new Date())
+      ? parse(from, "yyyy-MM-dd", new Date())
       : defaultFrom;
 
     const endDate = to
-      ? parse(to, "yyyy-MM-DD", new Date())
+      ? parse(to, "yyyy-MM-dd", new Date())
       : addDays(defaultTo, 1);
 
     const periodLength = differenceInDays(endDate, startDate) + 1;
