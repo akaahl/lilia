@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lilia Blue Portfolio
 
-## Getting Started
+A comprehensive personal finance and budgeting application designed to help
+users track, manage, and visualize their financial health.
 
-First, run the development server:
+## Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🌐 [View Live Demo](https://lilia-blue.vercel.app/){:target="\_blank"}
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Description
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Lilia Blue is a powerful budgeting and expense tracking application that helps
+users take control of their finances. The application offers:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Key Features
 
-## Learn More
+- **Account Management**: Create and manage multiple accounts (checking,
+  savings, credit cards)
+- **Transaction Tracking**: Log and categorize expenses and income
+- **Bulk Import**: Import transactions directly from bank statements (supports
+  CSV, Excel formats)
+- **Custom Categories**: Create and manage expense categories to organize
+  spending
+- **Budget Planning**: Set monthly budgets for different expense categories
+- **Data Visualization**:
+  - Monthly spending trends
+  - Category-wise expense breakdown
+  - Income vs. Expense analysis
+  - Custom date range reports
+- **Financial Insights**:
+  - Spending patterns analysis
+  - Budget vs. actual comparisons
+  - Savings rate calculations
+  - Net worth tracking
 
-To learn more about Next.js, take a look at the following resources:
+### Analytics & Reporting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Interactive dashboards with real-time updates
+- Customizable reports for different time periods
+- Export capabilities for financial summaries
+- Goal tracking and progress visualization
