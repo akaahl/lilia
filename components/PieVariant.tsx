@@ -7,7 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import CategoryTooltip from "./CategoryToolti";
+import CategoryTooltip from "./CategoryTooltip";
 
 const COLORS = ["#0062ff", "#12c6ff", "#ff647f", "#ff9354"];
 
