@@ -6,7 +6,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SelectedColumnsState } from "./ImportCard";
 import TableHeadSelect from "./TableHeadSelect";
 
 type Props = {

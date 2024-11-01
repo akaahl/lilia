@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format, parse } from "date-fns";
-import { Plus } from "lucide-react";
 import { useState } from "react";
 import ImportTable from "./ImportTable";
 import { convertAmountToMiliunits } from "@/lib/utils";
@@ -88,7 +87,7 @@ export default function ImportCard({ data, onCancel, onSubmit }: Props) {
       }, {});
     });
 
-    const formattedData = arrayOfData.map((item, index) => ({
+    const formattedData = arrayOfData.map((item) => ({
       ...item,
       amount: convertAmountToMiliunits(parseFloat(item.amount)),
       date: format(parse(item.date, dateFormat, new Date()), outputFormat),

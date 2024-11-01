@@ -4,7 +4,6 @@ import {
   RadialBar,
   RadialBarChart,
   ResponsiveContainer,
-  Tooltip,
 } from "recharts";
 
 const COLORS = ["#0062ff", "#12c6ff", "#ff647f", "#ff9354"];

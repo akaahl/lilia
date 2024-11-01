@@ -66,7 +66,7 @@ export default function TransactionsPage() {
     }));
 
     createTransactions.mutate(data, {
-      onSuccess: (result) => {
+      onSuccess: () => {
         handleCancel();
       },
       onError: (err) => {

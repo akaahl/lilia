@@ -10,7 +10,6 @@ import {
 import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import CountUp from "@/components/ui/countup";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Loader2 } from "lucide-react";
 
 const boxVariant = cva("rounded-md p-3", {
   variants: {

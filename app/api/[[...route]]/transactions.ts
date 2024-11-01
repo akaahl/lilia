@@ -8,7 +8,7 @@ import {
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
-import { and, desc, eq, gte, inArray, lte, sql } from "drizzle-orm";
+import { and, desc, eq, gte, inArray, lte } from "drizzle-orm";
 import { subDays, parse } from "date-fns";
 import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";

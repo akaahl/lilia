@@ -1,7 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useNewAccount } from "@/features/accounts/hooks/useNewAccount";
 import DataGrid from "./DataGrid";
 import DataCharts from "@/components/ui/data-charts";
 

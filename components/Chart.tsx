@@ -1,6 +1,5 @@
 import {
   AreaChart,
-  BarChart,
   BarChart3,
   FileSearch,
   LineChart,

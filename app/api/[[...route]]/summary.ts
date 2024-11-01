@@ -7,7 +7,7 @@ import { subDays, parse, differenceInDays, addDays } from "date-fns";
 import { and, desc, eq, gte, lt, lte, sql, sum } from "drizzle-orm";
 
 import { Hono } from "hono";
-import { number, z } from "zod";
+import { z } from "zod";
 
 const app = new Hono().get(
   "/",
@@ -83,8 +83,6 @@ const app = new Hono().get(
       lastPeriodEnd,
     );
 
-    console.log(currentPeriod, "This is current", lastPeriod, "This is last");
-
     const incomeChange = calculatePercentageChange(
       currentPeriod.income,
       lastPeriod.income,
@@ -99,8 +97,6 @@ const app = new Hono().get(
       currentPeriod.remaining,
       lastPeriod.remaining,
     );
-
-    console.log(remainingChange);
 
     const category = await db
       .select({
