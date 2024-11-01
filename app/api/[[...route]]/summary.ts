@@ -58,7 +58,7 @@ const app = new Hono().get(
             sql`SUM(CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount} ELSE 0 END)`.mapWith(
               Number,
             ),
-          remaining: sql`SUM(${transactions.amount})`.mapWith(Number),
+          remaining: sum(transactions.amount).mapWith(Number),
         })
         .from(transactions)
         .innerJoin(accounts, eq(transactions.accountId, accounts.id))
@@ -83,6 +83,8 @@ const app = new Hono().get(
       lastPeriodEnd,
     );
 
+    console.log(currentPeriod, "This is current", lastPeriod, "This is last");
+
     const incomeChange = calculatePercentageChange(
       currentPeriod.income,
       lastPeriod.income,
@@ -97,6 +99,8 @@ const app = new Hono().get(
       currentPeriod.remaining,
       lastPeriod.remaining,
     );
+
+    console.log(remainingChange);
 
     const category = await db
       .select({
