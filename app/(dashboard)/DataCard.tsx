@@ -10,6 +10,7 @@ import {
 import { cn, formatCurrency, formatPercentage } from "@/lib/utils";
 import CountUp from "@/components/ui/countup";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Loader2 } from "lucide-react";
 
 const boxVariant = cva("rounded-md p-3", {
   variants: {
@@ -99,7 +100,7 @@ export default function DataCard({
 
 export const DataCardLoading = () => {
   return (
-    <Card className="border-none drop-shadow-sm h-[212px]">
+    <Card className="border-none h-[195px]">
       <CardHeader className="flex flex-row items-center justify-between gap-x-4">
         <div className="space-y-2">
           <Skeleton className="h-6 w-24" />
