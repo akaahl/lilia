@@ -1,11 +1,11 @@
-# Lilia Blue Portfolio
+# Lilia Portfolio
 
 A comprehensive personal finance and budgeting application designed to help
 users track, manage, and visualize their financial health.
 
 ## Demo
 
-🌐 [View Live Demo](https://lilia-blue.vercel.app/){:target="\_blank"}
+🌐 [View Live Demo](https://lilia-blue.vercel.app/)
 
 ## Description
 
@@ -21,7 +21,6 @@ users take control of their finances. The application offers:
   CSV, Excel formats)
 - **Custom Categories**: Create and manage expense categories to organize
   spending
-- **Budget Planning**: Set monthly budgets for different expense categories
 - **Data Visualization**:
   - Monthly spending trends
   - Category-wise expense breakdown
