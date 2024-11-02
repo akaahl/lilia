@@ -1,4 +1,4 @@
-# Lilia Portfolio
+# Lilia
 
 A comprehensive personal finance and budgeting application designed to help
 users track, manage, and visualize their financial health.
@@ -9,8 +9,8 @@ users track, manage, and visualize their financial health.
 
 ## Description
 
-Lilia Blue is a powerful budgeting and expense tracking application that helps
-users take control of their finances. The application offers:
+Lilia is a powerful budgeting and expense tracking application that helps users
+take control of their finances. The application offers:
 
 ### Key Features
 
@@ -38,3 +38,36 @@ users take control of their finances. The application offers:
 - Customizable reports for different time periods
 - Export capabilities for financial summaries
 - Goal tracking and progress visualization
+
+## Tech Stack
+
+### Frontend
+
+- **Framework**: Next.js 14
+- **UI Libraries**:
+  - React 18
+  - Shadcn UI
+  - Tailwind CSS
+  - Lucide React (Icons)
+- **State Management**:
+  - Zustand
+  - TanStack React Query
+- **Forms & Validation**:
+  - React Hook Form
+  - Zod
+- **Data Visualization**:
+  - Recharts
+  - React CountUp
+
+### Backend & Database
+
+- **API**:
+  - Hono
+  - Clerk (Authentication)
+- **Database**:
+  - NeonDB (Postgres)
+  - Drizzle ORM
+
+### Developer Tools
+
+- **Language**: TypeScript
