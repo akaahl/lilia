@@ -20,6 +20,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Lilia",
   description: "A modern finance and budgeting app for busy individuals.",
+  icons: null,
 };
 
 export default function RootLayout({
